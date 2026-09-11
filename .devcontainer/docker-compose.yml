@@ -1,0 +1,22 @@
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/base:ubuntu
+    volumes:
+      - ..:/workspaces/${localWorkspaceFolderBasename}:cached
+    command: sleep infinity
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: talentflow-root
+      MYSQL_DATABASE: talentflow
+      MYSQL_USER: talentflow
+      MYSQL_PASSWORD: talentflow
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
