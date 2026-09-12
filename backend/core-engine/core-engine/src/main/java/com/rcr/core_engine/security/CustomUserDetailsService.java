@@ -1,6 +1,7 @@
 package com.rcr.core_engine.security;
 
-import com.rcr.core_engine.repository.UserRepository;
+import com.rcr.core_engine.repositories.UserRepository;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
