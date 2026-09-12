@@ -1,4 +1,4 @@
-package com.rcr.core_engine.repository;
+package com.rcr.core_engine.repositories;
 
 import com.rcr.core_engine.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
