@@ -15,10 +15,10 @@ import lombok.Setter;
 
 @Getter 
 @Setter 
-@NoArgsConstructor 
+@NoArgsConstructor
 @AllArgsConstructor 
 @Builder 
-class CandidateRegistrationRequest{
+public class CandidateRegistrationRequest{
    @NotBlank(message = "First Name is required")
    private String firstName;
 
@@ -43,3 +43,4 @@ class CandidateRegistrationRequest{
    @NotBlank(message = "captcha is required")
    private String captchaToken;
 }
+
