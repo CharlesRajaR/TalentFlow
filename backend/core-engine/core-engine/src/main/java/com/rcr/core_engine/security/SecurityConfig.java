@@ -1,6 +1,5 @@
-package com.rcr.core_engine.config;
+package com.rcr.core_engine.security;
 
-import com.rcr.core_engine.security.JwtAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
