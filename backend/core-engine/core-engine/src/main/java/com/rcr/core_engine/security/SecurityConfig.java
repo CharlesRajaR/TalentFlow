@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.rcr.core_engine.enums.Role;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -31,7 +33,7 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers("/appi/v1/candidates/**").hasAuthoriy("ROLE_CANDIDATE")
+                .requestMatchers("/appi/v1/candidates/**").hasRole(Role.ROLE_CANDIDATE.toString())
                 .requestMatchers("/api/v1/jobs/**").hasAuthority("ROLE_RECRUITER")
                 .requestMatchers("/api/v1/admin/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
