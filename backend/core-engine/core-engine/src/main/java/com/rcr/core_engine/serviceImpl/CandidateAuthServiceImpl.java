@@ -8,6 +8,7 @@ import com.rcr.core_engine.dtos.CandidateRegistrationRequest;
 import com.rcr.core_engine.entity.User;
 import com.rcr.core_engine.repositories.UserRepository;
 import com.rcr.core_engine.services.CandidateAuthService;
+import com.rcr.core_engine.services.CaptchaService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,9 +19,15 @@ public class CandidateAuthServiceImpl implements CandidateAuthService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final CaptchaService captchaService;
+
    
     @Override 
     public ApiResponse registerCandidate(CandidateRegistrationRequest request){
+        if(!captchaService.verifyCaptcha(request.getCaptchaToken(), request.getCaptchaInput())){
+            throw new IllegalArgumentException("Invalid Captcha! Please try again");
+        }
+
         if(!isValidCaptcha(request.getCaptchaToken())){
             throw new IllegalArgumentException("Invalid captcha Verification");
         }
