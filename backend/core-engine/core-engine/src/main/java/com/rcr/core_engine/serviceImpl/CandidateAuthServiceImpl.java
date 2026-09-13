@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.rcr.core_engine.dtos.ApiResponse;
 import com.rcr.core_engine.dtos.CandidateRegistrationRequest;
 import com.rcr.core_engine.entity.User;
+import com.rcr.core_engine.enums.Role;
 import com.rcr.core_engine.repositories.UserRepository;
 import com.rcr.core_engine.services.CandidateAuthService;
 import com.rcr.core_engine.services.CaptchaService;
@@ -24,13 +25,10 @@ public class CandidateAuthServiceImpl implements CandidateAuthService {
    
     @Override 
     public ApiResponse registerCandidate(CandidateRegistrationRequest request){
-        if(!captchaService.verifyCaptcha(request.getCaptchaToken(), request.getCaptchaInput())){
+        if(!captchaService.verifyCaptcha(request.getCaptchaId(), request.getCaptchaInput())){
             throw new IllegalArgumentException("Invalid Captcha! Please try again");
         }
 
-        if(!isValidCaptcha(request.getCaptchaToken())){
-            throw new IllegalArgumentException("Invalid captcha Verification");
-        }
 
         if(userRepository.existsByEmail(request.getEmail())){
             throw new IllegalArgumentException("Email already exists!");
@@ -44,7 +42,9 @@ public class CandidateAuthServiceImpl implements CandidateAuthService {
         .firstName(request.getFirstName().trim())
         .lastName(request.getLastName().trim())
         .mobile(request.getMobile().trim())
+        .email(request.getEmail().trim())
         .password(passwordEncoder.encode(request.getMobile().trim()))
+        .role(Role.ROLE_CANDIDATE)
         .dob(request.getDob())
         .build();
 
@@ -53,13 +53,5 @@ public class CandidateAuthServiceImpl implements CandidateAuthService {
         ApiResponse response = new ApiResponse(true, "candidate registered successfully");
 
         return response;
-    }
-
-    private Boolean isValidCaptcha(String captcha){
-       if(captcha != null){
-        return true;
-       }
-
-       return false;
-    }     
+    }   
 }
