@@ -32,8 +32,8 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers("/appi/v1/candidates/**").hasRole(Role.ROLE_CANDIDATE.toString())
+                .requestMatchers("/api/v1/auth/**", "/api/captcha/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .requestMatchers("/appi/v1/candidates/**").hasAuthority(Role.ROLE_CANDIDATE.toString())
                 .requestMatchers("/api/v1/jobs/**").hasAuthority("ROLE_RECRUITER")
                 .requestMatchers("/api/v1/admin/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
