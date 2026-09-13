@@ -42,5 +42,12 @@ public class CandidateRegistrationRequest{
 
    @NotBlank(message = "captcha is required")
    private String captchaToken;
+
+   @NotBlank(message = "Captcha ID is required")
+   private String captchaId;
+
+   @NotBlank(message = "Captcha answer is required")
+   @Size(min = 6, max = 6, message = "Captcha must be 6 characters")
+   private String captchaInput;
 }
 
