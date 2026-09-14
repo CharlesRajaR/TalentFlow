@@ -3,7 +3,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rcr.core_engine.dtos.ApiResponse;
+import com.rcr.core_engine.dtos.AuthResponse;
 import com.rcr.core_engine.dtos.CandidateRegistrationRequest;
+import com.rcr.core_engine.dtos.LoginRequest;
+import com.rcr.core_engine.dtos.SendOtpRequest;
 import com.rcr.core_engine.services.CandidateAuthService;
 
 import jakarta.validation.Valid;
@@ -28,6 +31,19 @@ public class CandidateAuthController {
         ApiResponse response = candidateAuthService.registerCandidate(request);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+
+    @PostMapping("/send-otp")
+    public ResponseEntity<ApiResponse> sendOtp(@Valid @RequestBody SendOtpRequest request) {
+        candidateAuthService.sendOtp(request);
+        return ResponseEntity.ok(new ApiResponse(true, "OTP sent successfully. Check your terminal/inbox."));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
+        AuthResponse response = candidateAuthService.login(request);
+        return ResponseEntity.ok(response);
     }
     
 }
